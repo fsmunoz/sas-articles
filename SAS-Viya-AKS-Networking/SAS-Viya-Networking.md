@@ -1,9 +1,10 @@
 ---
-title: SAS Viya, Kubernetes and networking: a gentle introduction
-author: Frederico Muñoz <frederio.munoz@sas.com>
+title: "SAS Viya, Kubernetes and networking: a gentle introduction"
+author: "Frederico Muñoz <frederio.munoz@sas.com>"
 ---
 
-# Introdution
+
+# Introduction
 
 
 > In essence, Kubernetes is the sum of all the bash scripts and best practices
@@ -33,7 +34,8 @@ set of well-known components, SAS Viya depends on nodes, deployments, services,
 ingresses, and pods, plus many other concepts that can seem complex - and
 especially so in terms of the network aspects.
 
-![SAS Studio in SAS Viya](./sas-studio-window.png)
+![SAS Studio in SAS Viya](https://raw.githubusercontent.com/fsmunoz/sas-articles/main/SAS-Viya-AKS-Networking/sas-studio-window.png)
+
 
 When using SAS Studio in SAS Viya, how do our requests get there? This is
 precisely the aspect we will address in this article: how do network requests
@@ -82,7 +84,7 @@ will become more obvious.
 
 This diagram is a good starting point for the concepts we will explore:
 
-![SAS Viya on AKS](./aks-sas-overview.png)
+![SAS Viya on AKS]([./aks-sas-overview.png](https://github.com/fsmunoz/sas-articles/raw/main/SAS-Viya-AKS-Networking/aks-sas-overview.png)
 
 
 * SAS Viya, as a solution, is composed of Pods, Services and Ingresses, just a
@@ -105,7 +107,7 @@ The following image shows the network configuration of the cluster; there's no
 need to fully understand what this means right now, but we will be referring
 back to this information as we go along.
 
-![AKS network overview](./aks_network_overview.png)
+![AKS network overview](https://github.com/fsmunoz/sas-articles/raw/main/SAS-Viya-AKS-Networking/aks_network_overview.png)
 
 We should note that the details above match our earlier description of the
 `kubenet` CNI, and in simple terms determines which address space is reserved
@@ -115,7 +117,7 @@ With that out of the way, let's start!
 
 ## Microservices: the Pod
 
-![The SAS Studio pod](./pod-view.png)
+![The SAS Studio pod](https://github.com/fsmunoz/sas-articles/raw/main/SAS-Viya-AKS-Networking/pod-view.png)
 
 The actual application that will interact with our requests - the closest
 equivalent to what would be the application program in a "traditional" server
@@ -271,7 +273,7 @@ Fortunately, Kubernetes has a way to address this, and much more: **Services**.
 
 ## Internal load-balancing : the Service
 
-![The SAS Studio Service](./svc-view.png)
+![The SAS Studio Service](https://github.com/fsmunoz/sas-articles/raw/main/SAS-Viya-AKS-Networking/svc-view.png)
 
 A [Kubernetes
 Service](https://kubernetes.io/docs/concepts/services-networking/service/) is a
@@ -359,7 +361,7 @@ else: an Ingress.
 
 ## Exposing to the outside world: the Ingress
 
-![The SAS Studio Ingress](./ing-view.png)
+![The SAS Studio Ingress](https://github.com/fsmunoz/sas-articles/raw/main/SAS-Viya-AKS-Networking/ing-view.png)
 
 We went from Pods, to Services, and now we reach another layer: [the
 Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/). In
@@ -417,7 +419,7 @@ controller](https://github.com/kubernetes/ingress-nginx).
 
 ## The NGINX Ingress controller
 
-![The NGINX Ingress Controller](./ingc-view.png)
+![The NGINX Ingress Controller](https://github.com/fsmunoz/sas-articles/raw/main/SAS-Viya-AKS-Networking/ingc-view.png)
 
 If the idea of defining rules to direct HTTP traffic seems something that an
 HTTP server or proxy would do, well, that's because that's true: the [Ingress
@@ -460,7 +462,7 @@ needed when working in a Kubernetes context, and there is one aspect which is
 important to highlight: the way it interact with cloud environments to provide a
 public endpoint IP.
 
-## Reaching the Ingress: cloud Load Balancers
+## Reaching the Ingress: the Cloud Load Balancer
 
 
 The last step in our journey, this is the first an only which is outside the
@@ -526,10 +528,10 @@ traffic to NGINX, but obviously will only work inside the cluster.
 
 In terms of Azure, the topology will be something like this:
 
-![Azure Load Balancer](./azure-lb.png)
+![Azure Load Balancer](https://github.com/fsmunoz/sas-articles/raw/main/SAS-Viya-AKS-Networking/azure-lb.png)
 
 The cloud load balancer will check the status of all nodes by connecting to
-http://<node-external-ip>:31081/healthz (this can be seen in the _Health Probes_
+`http://<node-external-ip>:31081/healthz` (this can be seen in the _Health Probes_
 blade in Azure). The nodes where the ingress pod is running will answer with
 `HTTP 200`, and traffic will be sent to that node's external IP on the ports
 where it's listening - 30623(HTTP) and 30954 (HTTPS).
@@ -560,7 +562,7 @@ Having gone through this step-by-step exploration of the different components,
 we should now be more prepared for a diagram that goes a bit more in-depth, and
 that we can use as a reference:
 
-![SAS Viya on AKS](./sas-viya-k8s.png)
+![SAS Viya on AKS](https://github.com/fsmunoz/sas-articles/raw/main/SAS-Viya-AKS-Networking/sas-viya-k8s.png)
 
 
 Starting from the outside - for example, an end-user browser trying to access
